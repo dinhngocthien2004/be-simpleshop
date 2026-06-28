@@ -1,0 +1,11 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+
+# Secrets
+appsettings.Production.json
+*.db

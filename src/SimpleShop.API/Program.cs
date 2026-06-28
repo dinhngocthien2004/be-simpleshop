@@ -57,16 +57,16 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-var corsOrigins = CorsHelper.GetAllowedOrigins(builder.Configuration);
+// ─── CORS ─────────────────────────────────────────────────────
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("FrontendCors", policy =>
-    {
-        policy.WithOrigins(corsOrigins)
+    options.AddPolicy("FrontendPolicy", policy =>
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+              .AllowAnyMethod());
 });
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
